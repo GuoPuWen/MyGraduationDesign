@@ -7,27 +7,42 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="相机"
-        android:onClick="camera"/>
+        android:text="原图：" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="相册"
-        android:onClick="album"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="相册"
-        android:onClick="startOcr"/>
 
     <ImageView
-        android:id="@+id/iv_show_select"
+        android:id="@+id/ori_pic"
         android:layout_width="match_parent"
-        android:layout_height="400dp"/>
+        android:layout_height="200dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="处理后：" />
+
+
+    <ImageView
+        android:id="@+id/pre_pic"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="识别结果:" />
+
+
+    <TextView
+        android:id="@+id/res"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="识别结果" />
+
+
+
+
 
 </LinearLayout>

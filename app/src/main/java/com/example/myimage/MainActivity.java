@@ -22,6 +22,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.googlecode.tesseract.android.TessBaseAPI;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -37,12 +39,16 @@ public class MainActivity extends AppCompatActivity {
     private Uri uri;                    //调用裁剪之后图片保存的uri
     private Uri uriTemp;                //调用相册或者相机之后的Uri
 
+
+
     private File imageFile;             // 保存图片的文件
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         iv_show_select = findViewById(R.id.iv_show_select);
+
+
     }
     //绑定事件
     public void camera(View v){
@@ -60,6 +66,16 @@ public class MainActivity extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(intent, ALBUM_REQ_CODE);
     }
+
+
+
+    public void startOcr(View v){
+        Intent intent = new Intent(this, OcrActivity.class);
+        startActivity(intent);
+    }
+
+
+
 
     /**
      * 拍照方法
@@ -227,6 +243,5 @@ public class MainActivity extends AppCompatActivity {
             cropPhoto(uri);
         }
     }
-
 
 }
