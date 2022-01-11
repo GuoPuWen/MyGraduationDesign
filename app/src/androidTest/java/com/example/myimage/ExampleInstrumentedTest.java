@@ -60,4 +60,13 @@ public class ExampleInstrumentedTest {
     }
 
 
+
+    @Test
+    public void testDensity(){
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        float density = context.getResources().getDisplayMetrics().density;
+        System.out.println(density);
+
+    }
 }

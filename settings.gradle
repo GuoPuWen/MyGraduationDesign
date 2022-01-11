@@ -1,2 +1,4 @@
+include ':opensdk'
+include ':sdk'
 include ':app'
 rootProject.name = "MyImage"
