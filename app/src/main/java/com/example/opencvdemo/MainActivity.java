@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         imgSrc = findViewById(R.id.img_src);
         imgRes = findViewById(R.id.img_res);
         tx = findViewById(R.id.fab);
-        tx.setText(stringFromJNI());
+
         Bitmap source = loadBitmap();
         imgSrc.setImageBitmap(source);
 
@@ -49,15 +49,13 @@ public class MainActivity extends AppCompatActivity {
 //        int[] grayPixel = doGray(pixel, width, height);
 
         Bitmap res = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        JniBitmapExec(source, res);
-
+        JniBitmapUseSWT(source, res);
 //        Bitmap grayRes = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 //        grayRes.setPixels(grayPixel, 0, width, 0, 0, width, height);
         saveBitmap("res.jpg", res, this);
         imgRes.setImageBitmap(res);
 
     }
-    private native int[] doGray(int[] imgData, int width, int height);
 
     /**
      * 加载图片为Bitmap
@@ -78,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
-    public native void JniBitmapExec(Bitmap source, Bitmap res);
+
+    public native void JniBitmapUseSWT(Bitmap source, Bitmap res);
 
     public void saveBitmap(String name, Bitmap bm, Context mContext) {
         Log.d("Save Bitmap", "Ready to save picture");

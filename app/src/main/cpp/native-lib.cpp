@@ -36,8 +36,6 @@
 #define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG,__VA_ARGS__) // 定义LOGE类型
 #define LOGF(...)  __android_log_print(ANDROID_LOG_FATAL,LOG,__VA_ARGS__) // 定义LOGF类型
 
-
-
 using namespace std;
 using namespace cv;
 using std::string;
@@ -52,63 +50,6 @@ using std::string;
 #include "TextDetection.h"
 
 #define PI 3.14159265
-extern "C" JNIEXPORT jintArray JNICALL
-Java_com_example_opencvdemo_MainActivity_doGray(
-        JNIEnv *env, jobject thiz, jintArray source,
-        jint width, jint height){
-    jint *input;
-    input = env->GetIntArrayElements(source, JNI_FALSE);
-
-    Mat sourceMat(height, width, CV_8UC4, (unsigned char *) input);
-//    Mat res = DetectText::textDetection(sourceMat, 1);
-
-
-    Mat grayMat;
-    cvtColor(sourceMat, grayMat, CV_BGRA2GRAY);
-//
-//
-//    Mat resultMat;
-//    cvtColor(grayMat, resultMat, CV_GRAY2BGRA);
-    int size = width * height;
-    jintArray result = env->NewIntArray(size);
-    uchar *output = grayMat.data;
-    env->SetIntArrayRegion(result, 0, size, (const jint *) output);
-    env->ReleaseIntArrayElements(source, input, 0);
-    return result;
-}
-extern "C" JNIEXPORT jstring JNICALL
-Java_com_example_opencvdemo_MainActivity_stringFromJNI(
-        JNIEnv *env,
-        jobject /* this */) {
-
-    string Str = "Hello from C++";
-
-    //-------------------------------------
-    boost::chrono::system_clock::time_point p  = boost::chrono::system_clock::now();
-    std::time_t t = boost::chrono::system_clock::to_time_t(p);
-
-    char buffer[26];
-    ctime_r(&t, buffer);
-
-    //  std::string tst = std::to_string(3);
-
-    int ver = BOOST_VERSION;
-    int ver_maj = ver/100000;
-    int ver_min = ver / 100 %1000;
-    int ver_pat = ver %100;
-
-    string Ver_Maj = boost::lexical_cast<string>(ver_maj);
-    string Ver_Min = boost::lexical_cast<string>(ver_min);
-    string Ver_Pat = boost::lexical_cast<string>(ver_pat);
-
-    Str += "\n Boost version: " + Ver_Maj + "." + Ver_Min + "." + Ver_Pat + "\n";
-    Str += "... built with NDK version: " + string(BOOST_BUILT_WITH_NDK_VERSION) + "\n";
-    Str += "... says time is " + std::string(buffer) + "\n\n";
-    //--------------------------------------------
-
-
-    return env->NewStringUTF(Str.c_str());;
-}
 
 
 bool BitmapToMatrix(JNIEnv * env, jobject obj_bitmap, cv::Mat & matrix) {
@@ -172,7 +113,7 @@ bool MatrixToBitmap(JNIEnv * env, cv::Mat & matrix, jobject obj_bitmap) {
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_opencvdemo_MainActivity_JniBitmapExec(
+Java_com_example_opencvdemo_MainActivity_JniBitmapUseSWT(
         JNIEnv * env, jobject /* this */,
         jobject obj_bitmap, jobject obj_bitmapOut
 ){
@@ -189,7 +130,6 @@ Java_com_example_opencvdemo_MainActivity_JniBitmapExec(
 
     ret = MatrixToBitmap(env, res, obj_bitmapOut);       // Bitmap to cv::Mat
     if (ret == false) {
-        LOGI("false-------------2");
         return;
     }
 }
