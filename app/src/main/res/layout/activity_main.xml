@@ -110,6 +110,7 @@
     </RadioGroup>
 
     <RadioGroup
+        android:id="@+id/comprssRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -136,6 +137,7 @@
     </RadioGroup>
 
     <RadioGroup
+        android:id="@+id/rotateRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
