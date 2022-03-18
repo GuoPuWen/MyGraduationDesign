@@ -41,7 +41,7 @@ import android.view.View;
 
 import java.util.List;
 
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
