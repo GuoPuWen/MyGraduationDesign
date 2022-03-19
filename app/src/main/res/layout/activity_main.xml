@@ -90,6 +90,7 @@
             android:layout_marginStart="10dp"
             android:hint="宽"
             android:inputType="number"
+            android:text="800"
             android:minWidth="50dp" />
 
         <TextView
@@ -105,6 +106,7 @@
             android:layout_marginStart="10dp"
             android:hint="高"
             android:inputType="number"
+            android:text="1000"
             android:minWidth="50dp" />
 
     </RadioGroup>
@@ -163,28 +165,82 @@
             android:text="否" />
     </RadioGroup>
 
+
+    <RadioGroup
+        android:id="@+id/swtRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是否使用SWT算法预处理" />
+
+        <RadioButton
+            android:id="@+id/useSwt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是" />
+
+        <RadioButton
+            android:id="@+id/noUseSwt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="否" />
+    </RadioGroup>
+
+
+    <RadioGroup
+        android:id="@+id/ocrTypeRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="识别方式" />
+
+        <RadioButton
+            android:id="@+id/chinese"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="中文" />
+
+        <RadioButton
+            android:id="@+id/eng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="英文" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/capture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="start"
+        android:layout_marginTop="2dp"
+        android:text="选择照片"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/photoIv" />
+
 
     <Button
         android:id="@+id/ocr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="start"
+        android:layout_marginTop="2dp"
+        android:text="开始识别"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photoIv" />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/photoIv"

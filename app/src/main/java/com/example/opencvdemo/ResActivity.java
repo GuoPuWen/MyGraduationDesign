@@ -39,22 +39,27 @@ public class ResActivity  extends AppCompatActivity {
 
         Intent intent = getIntent();
         Uri uri = (Uri)intent.getParcelableExtra("uri");
-
+        String language = (String)intent.getStringExtra("language");
+        int useSwt = (int) intent.getIntExtra("useSwt", 1); //默认使用
+        Log.i("useSwt", String.valueOf(useSwt));
         try {
             source = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         path = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getPath();
-        ocr = new NaturalSceneOCR(source, path);
+        ocr = new NaturalSceneOCR(source, path,language,useSwt);
         Log.i("dataPath", path);
         ori_pic.setImageBitmap(source);
 
-        ocr.SWT();
+//        ocr.SWT();
+
+
+        String text = ocr.TesseractOCR();
+
         Bitmap swtImage = ocr.getSwtImage();
         pre_pic.setImageBitmap(swtImage);
 
-        String text = ocr.TesseractOCR("eng");
         res.setText(text);
 
     }

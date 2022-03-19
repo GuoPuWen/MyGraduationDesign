@@ -18,13 +18,15 @@ public class NaturalSceneOCR {
      * 构造方法
      * @param source
      */
-    public NaturalSceneOCR(Bitmap source, String path){
+    public NaturalSceneOCR(Bitmap source, String path, String language, int useSwt){
         this.oriImage = source;
 
         int width = source.getWidth();
         int height = source.getHeight();
         swtImage = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         this.path = path;
+        this.language = language;
+        this.useSwt = useSwt;
     }
 
     /**
@@ -39,9 +41,10 @@ public class NaturalSceneOCR {
     private Bitmap oriImage;        //原始图像
     private Bitmap swtImage;        //经过SWT处理之后的图像
     private String res;             //经过Tesseract OCR处理得到的结果
-    private static String LANGUAGETYPE = "eng";           //Tesseract识别的语言类型     //T
+    private static String language ;           //Tesseract识别的语言类型     //T
     private String path = "";
     // esseract语言包地址
+    private int useSwt; //是否使用SWT
 
     public Bitmap getSwtImage() {
         return swtImage;
@@ -53,14 +56,17 @@ public class NaturalSceneOCR {
 
     /**
      * 使用Tesseract进行识别
-     * @param lan     语言类型 eng为英语
+     * @param language     语言类型 eng为英语
      * @return  返回识别结果
      */
-    public String TesseractOCR(String lan) {
-//        SWT();
+    public String TesseractOCR() {
+        if(useSwt == 1) {
+            SWT();
+        }
+
         TessBaseAPI tessBaseAPI = new TessBaseAPI();
         tessBaseAPI.setDebug(true);
-        tessBaseAPI.init(path, lan);
+        tessBaseAPI.init(path, language);
         tessBaseAPI.setImage(swtImage);                     //传入SWT处理之后的图像
         String text = tessBaseAPI.getUTF8Text();            //得到结果
         Log.i(TAG, text);
