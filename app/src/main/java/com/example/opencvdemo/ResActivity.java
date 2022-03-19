@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ public class ResActivity  extends AppCompatActivity {
 
     private ImageView ori_pic;
     private ImageView pre_pic;
-    private TextView res;
+    private EditText res;
 
     private Bitmap source;
 

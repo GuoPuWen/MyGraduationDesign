@@ -227,9 +227,11 @@ public class MainActivity extends AppCompatActivity {
             switch (checkId) {
                 case R.id.chinese :
                     language = "chi_sim";
+                    Log.i("language", language);
                     break;
                 case R.id.eng:
                     language = "eng";
+                    Log.i("language", language);
                     break;
                 default:
                     Log.e(TAG, "ocrTypeRadioGroup is error");

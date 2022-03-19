@@ -56,12 +56,14 @@ public class NaturalSceneOCR {
 
     /**
      * 使用Tesseract进行识别
-     * @param language     语言类型 eng为英语
+     * @param      语言类型 eng为英语
      * @return  返回识别结果
      */
     public String TesseractOCR() {
         if(useSwt == 1) {
             SWT();
+        }else{
+            swtImage = oriImage;
         }
 
         TessBaseAPI tessBaseAPI = new TessBaseAPI();

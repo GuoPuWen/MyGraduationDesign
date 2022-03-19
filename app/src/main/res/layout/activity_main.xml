@@ -18,7 +18,7 @@
             android:id="@+id/take_photo_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="拍照" />
 
         <RadioButton
@@ -40,7 +40,7 @@
             android:id="@+id/noCropBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="不裁剪" />
 
         <RadioButton
@@ -74,7 +74,7 @@
             android:id="@+id/outputBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="宽x高" />
 
         <RadioButton
@@ -134,7 +134,7 @@
             android:id="@+id/noCompress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="否" />
     </RadioGroup>
 
@@ -155,7 +155,7 @@
             android:id="@+id/rotateProcessing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+
             android:text="是" />
 
         <RadioButton
@@ -210,7 +210,7 @@
             android:id="@+id/chinese"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+            
             android:text="中文" />
 
         <RadioButton
