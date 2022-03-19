@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText outputY;           //宽
     private ImageView photoIv;          //最后显示图片
 
+    private Button ocr;
+
+    private Uri uri = null;
+
 
 
     private RadioButton take_photo_btn;     // 拍照
@@ -79,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
         photoManager = UTakePhoto.with(this);
         cropBuilder = new CropOptions.Builder();    //裁剪选项
+
+        ocr = findViewById(R.id.ocr);
     }
 
 
@@ -200,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void takeSuccess(List<Uri> uriList) {
                     if (uriList != null) {
-                        photoIv.setImageURI(uriList.get(0));
+                        uri = uriList.get(0);
+                        photoIv.setImageURI(uri);
                     }
                 }
 
@@ -218,6 +225,15 @@ public class MainActivity extends AppCompatActivity {
             });
         });
 
+
+        ocr.setOnClickListener((v) -> {
+            if(uri != null) {
+                Intent intent = new Intent(MainActivity.this,ResActivity.class);
+                intent.putExtra("uri",uri);
+                startActivity(intent);
+            }
+
+        });
 
 
     }

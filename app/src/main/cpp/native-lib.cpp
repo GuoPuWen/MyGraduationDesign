@@ -113,7 +113,7 @@ bool MatrixToBitmap(JNIEnv * env, cv::Mat & matrix, jobject obj_bitmap) {
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_opencvdemo_MainActivity_JniBitmapUseSWT(
+Java_com_example_opencvdemo_NaturalSceneOCR_JniBitmapUseSWT(
         JNIEnv * env, jobject /* this */,
         jobject obj_bitmap, jobject obj_bitmapOut
 ){
