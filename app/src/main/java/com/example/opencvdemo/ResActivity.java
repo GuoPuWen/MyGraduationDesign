@@ -1,5 +1,6 @@
 package com.example.opencvdemo;
 
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -9,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.FileNotFoundException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class ResActivity  extends AppCompatActivity {
 
@@ -33,9 +40,20 @@ public class ResActivity  extends AppCompatActivity {
 
     private NaturalSceneOCR ocr ;
 
+
+
     private String path = "";
 
+    private String text = "";   //最终结果
+
+    private Bitmap swtImage ;
+
     private Button copy;
+    private static final String TAG = "ResActivity";
+
+    Handler handler;        // Handler 消息处理
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,15 +80,34 @@ public class ResActivity  extends AppCompatActivity {
         Log.i("dataPath", path);
         ori_pic.setImageBitmap(source);
 
+        ProgressDialog pd = ProgressDialog.show(this, "提示", "正在识别中", false, true);
+
+        handler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                pre_pic.setImageBitmap(swtImage);
+                res.setText(text);
+                pd.cancel();
+            }
+        };
+
+        MyOcr myOcr = new MyOcr();
+        myOcr.start();
+
 //        ocr.SWT();
+//        new Thread(() -> {
+//            text =  ocr.TesseractOCR();
+//            Log.i(TAG, "识别完成");
+//            swtImage = ocr.getSwtImage();
+//            pre_pic.setImageBitmap(swtImage);
+//            res.setText(text);
+//        }).start();
+
+        //String text = ocr.TesseractOCR();           //大任务 多线程 TODO
 
 
-        String text = ocr.TesseractOCR();           //大任务 多线程 TODO
 
-        Bitmap swtImage = ocr.getSwtImage();
-        pre_pic.setImageBitmap(swtImage);
-
-        res.setText(text);
 
         //复制到剪切板
         copy.setOnClickListener(v -> {
@@ -87,6 +124,22 @@ public class ResActivity  extends AppCompatActivity {
     }
 
 
+    class MyOcr extends Thread {
+        @Override
+        public void run() {
 
+            text =  ocr.TesseractOCR();
+            swtImage = ocr.getSwtImage();
+            Log.i(TAG, "识别完成");
+            handler.sendEmptyMessage(0);
+        }
+
+    }
+
+    public void initPd(){
+
+    }
 }
+
+
 
