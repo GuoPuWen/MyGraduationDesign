@@ -56,7 +56,7 @@ public class NaturalSceneOCR {
 
     /**
      * 使用Tesseract进行识别
-     * @param      语言类型 eng为英语
+     * @param       eng为英语
      * @return  返回识别结果
      */
     public String TesseractOCR() {

@@ -39,7 +39,18 @@
         android:id="@+id/res"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="识别结果" />
+        android:textIsSelectable="true"
+        />
+
+    <Button
+        android:id="@+id/copy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="复制"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 

@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     public  void init() {
         type_group = findViewById(R.id.type_group);
+        cropText = findViewById(R.id.cropText);
         crop = findViewById(R.id.crop);
         cropRadioGroup = findViewById(R.id.cropRadioGroup);
         comprssRadioGroup = findViewById(R.id.comprssRadioGroup);
@@ -295,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
         ocr.setOnClickListener((v) -> {
             if(uri != null) {
-                Intent intent = new Intent(MainActivity.this,ResActivity.class);
+                Intent intent = new Intent(MainActivity.this, ResActivity.class);
                 intent.putExtra("uri",uri);
                 intent.putExtra("useSwt", useSwt );  //1 是使用 0不使用
                 intent.putExtra("language", language);
