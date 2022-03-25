@@ -1,10 +1,14 @@
 package com.example.opencvdemo;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -25,7 +29,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.databaseHelper.Database;
+import com.example.databaseHelper.MyHelper;
+
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -53,12 +61,16 @@ public class ResActivity  extends AppCompatActivity {
 
     Handler handler;        // Handler 消息处理
 
-
+    private Dialog progressDialog;  //进度条
+    private SQLiteDatabase database = null;     //数据库对象
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        initDialog();
+
         ori_pic = findViewById(R.id.ori_pic);
         pre_pic = findViewById(R.id.pre_pic);
         res = findViewById(R.id.res);
@@ -80,18 +92,22 @@ public class ResActivity  extends AppCompatActivity {
         Log.i("dataPath", path);
         ori_pic.setImageBitmap(source);
 
-        ProgressDialog pd = ProgressDialog.show(this, "提示", "正在识别中", false, true);
+        //ProgressDialog pd = ProgressDialog.show(this, "提示", "正在识别中", false, true);
 
         handler = new Handler(){
+            @SuppressLint("HandlerLeak")
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
                 pre_pic.setImageBitmap(swtImage);
                 res.setText(text);
-                pd.cancel();
+                //pd.cancel();
+                progressDialog.dismiss();
+                Database data = new Database();
+                data.setText(text);
+                data.setUri(uri.toString());
             }
         };
-
         MyOcr myOcr = new MyOcr();
         myOcr.start();
 
@@ -136,7 +152,23 @@ public class ResActivity  extends AppCompatActivity {
 
     }
 
-    public void initPd(){
+    public void initDialog(){
+        progressDialog = new Dialog(ResActivity.this,R.style.progress_dialog);
+        progressDialog.setContentView(R.layout.dialog);
+        progressDialog.setCancelable(true);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText("卖力识别中");
+        progressDialog.show();
+    }
+
+    public void insertDatabase(Database data) {
+        MyHelper myHelper = new MyHelper(this);
+        database = myHelper.getWritableDatabase();
+        ContentValues cV = new ContentValues();
+        cV.put(Database.URI, data.getUri());
+        cV.put(Database.TEXT, data.getText());
+        database.insert(Database.TABLE_NAME, null, cV);
 
     }
 }

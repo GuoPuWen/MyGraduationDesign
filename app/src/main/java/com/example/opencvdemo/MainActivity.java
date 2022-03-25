@@ -1,20 +1,18 @@
 package com.example.opencvdemo;
 
-import android.content.ContentResolver;
+
 import android.os.Bundle;
 
 import android.app.Activity;
-import android.app.RecoverableSecurityException;
-import android.content.ContentUris;
+
 import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,7 +26,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.appbar.AppBarLayout;
+
+import com.example.databaseHelper.MyHelper;
 import com.sl.utakephoto.compress.CompressConfig;
 import com.sl.utakephoto.crop.CropOptions;
 import com.sl.utakephoto.exception.TakeException;
@@ -36,9 +35,6 @@ import com.sl.utakephoto.manager.ITakePhotoResult;
 import com.sl.utakephoto.manager.TakePhotoManager;
 import com.sl.utakephoto.manager.UTakePhoto;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
@@ -119,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu1:
                 Toast.makeText(this, "点击了第" + 1 + "个", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.menu2:
                 Toast.makeText(this, "点击了第" + 2 + "个", Toast.LENGTH_SHORT).show();
@@ -135,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        createDatabase();           //初始化数据库adb
 
         //拍照或者选择照片
         type_group.setOnCheckedChangeListener((group, checkId) -> {
@@ -305,5 +303,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void createDatabase() {
+        MyHelper myHelper = new MyHelper(this);
+        myHelper.getWritableDatabase();
     }
 }
