@@ -1,4 +1,2 @@
-include ':opensdk'
-include ':sdk'
-include ':app'
-rootProject.name = "MyImage"
+include ':app',':utakephoto'
+rootProject.name = "OpenCVDemo"

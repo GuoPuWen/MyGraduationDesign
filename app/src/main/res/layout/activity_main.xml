@@ -7,27 +7,249 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
+    <RadioGroup
+        android:id="@+id/type_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="相机"
-        android:onClick="camera"/>
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/take_photo_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="拍照" />
+
+        <RadioButton
+            android:id="@+id/selelct_photo_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择照片" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/crop"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/noCropBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="不裁剪" />
+
+        <RadioButton
+            android:id="@+id/system_crop_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="系统裁剪" />
+
+        <RadioButton
+            android:id="@+id/own_crop_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自带裁剪" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/cropRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="尺寸/比例"
+            android:textColor="#333" />
+
+        <RadioButton
+            android:id="@+id/outputBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="宽x高" />
+
+        <RadioButton
+            android:id="@+id/aspectBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="宽/高" />
+
+        <EditText
+            android:id="@+id/outputX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:hint="宽"
+            android:inputType="number"
+            android:text="800"
+            android:minWidth="50dp" />
+
+        <TextView
+            android:id="@+id/cropText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x" />
+
+        <EditText
+            android:id="@+id/outputY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:hint="高"
+            android:inputType="number"
+            android:text="1000"
+            android:minWidth="50dp" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/comprssRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是否压缩" />
+
+        <RadioButton
+            android:id="@+id/compress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是" />
+
+        <RadioButton
+            android:id="@+id/noCompress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="否" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/rotateRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="原图是否旋转处理" />
+
+        <RadioButton
+            android:id="@+id/rotateProcessing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="是" />
+
+        <RadioButton
+            android:id="@+id/noRotateProcessing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="否" />
+    </RadioGroup>
+
+
+    <RadioGroup
+        android:id="@+id/swtRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是否使用SWT算法预处理" />
+
+        <RadioButton
+            android:id="@+id/useSwt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是" />
+
+        <RadioButton
+            android:id="@+id/noUseSwt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="否" />
+    </RadioGroup>
+
+
+    <RadioGroup
+        android:id="@+id/ocrTypeRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="识别方式" />
+
+        <RadioButton
+            android:id="@+id/chinese"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="中文" />
+
+        <RadioButton
+            android:id="@+id/eng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="英文" />
+    </RadioGroup>
 
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/capture"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="相册"
-        android:onClick="album"/>
+        android:layout_marginTop="2dp"
+        android:text="选择照片"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photoIv" />
+
 
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/ocr"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="相册"
-        android:onClick="startOcr"/>
+        android:layout_marginTop="2dp"
+        android:text="开始识别"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/iv_show_select"
+        android:id="@+id/photoIv"
         android:layout_width="match_parent"
-        android:layout_height="400dp"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"/>
+
 
 </LinearLayout>
