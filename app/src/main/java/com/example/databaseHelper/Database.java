@@ -4,43 +4,14 @@ import java.net.URI;
 import java.util.Date;
 
 public class Database {
-    public final static String DATABASE_NAME = "History.db";
+    public final static String DATABASE_NAME = "History1.db";
     public final static int DATABASE_VERSION = 1;
 
-    public final static String TABLE_NAME = "history";
-    public final static String ID = "id";
-    public final static String URI = "URI";
-    public final static String DATA = "Data";
-    public final static String TEXT = "Text";
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    private  Integer id;
-    private  String uri;         //图片的存储url
-    private  Date data;          //识别时间
-    private  String text;        //识别结果
-
+    public final static String TABLE_NAME = "history2";
+    public final static String ID = "ID";   //id
+    public final static String SURI = "SURI";
+    public final static String PURI = "PURI";
+    public final static String TEXT = "TEXT";
+    public final static String TIME = "TIME";
 
 }

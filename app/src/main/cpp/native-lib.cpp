@@ -115,7 +115,13 @@ bool MatrixToBitmap(JNIEnv * env, cv::Mat & matrix, jobject obj_bitmap) {
 extern "C" JNIEXPORT void JNICALL
 Java_com_example_opencvdemo_NaturalSceneOCR_JniBitmapUseSWT(
         JNIEnv * env, jobject /* this */,
-        jobject obj_bitmap, jobject obj_bitmapOut
+        jobject obj_bitmap,
+        jobject grayImage,
+        jobject edgeImage,
+        jobject saveSWT,
+        jobject components,
+        jobject result
+
 ){
     cv::Mat matBitmap;
     bool ret = BitmapToMatrix(env, obj_bitmap, matBitmap);          // Bitmap to cv::Mat
@@ -125,13 +131,18 @@ Java_com_example_opencvdemo_NaturalSceneOCR_JniBitmapUseSWT(
     }
 
     // opencv processing of mat
-    Mat res = DetectText::textDetection(matBitmap, 1);
+    std::vector<cv::Mat> res = DetectText::textDetection(matBitmap, 1);
+    MatrixToBitmap(env, res[0], grayImage);
+    MatrixToBitmap(env, res[1], edgeImage);
+    MatrixToBitmap(env, res[2], saveSWT);
+    MatrixToBitmap(env, res[3], components);
+    MatrixToBitmap(env, res[4], result);
     //cvtColor(matBitmap, grayMat, CV_BGRA2GRAY);
 
-    ret = MatrixToBitmap(env, res, obj_bitmapOut);       // Bitmap to cv::Mat
-    if (ret == false) {
-        return;
-    }
+//    ret = MatrixToBitmap(env, res, obj_bitmapOut);       // Bitmap to cv::Mat
+//    if (ret == false) {
+//        return;
+//    }
 }
 
 namespace DetectText {
@@ -384,11 +395,13 @@ namespace DetectText {
     }
 
     //--------方法入口
-    Mat textDetection (const Mat& input, bool dark_on_light) {
+    std::vector<Mat> textDetection (const Mat& input, bool dark_on_light) {
+
         LOGI("开始swt算法");
         //  CV_8U是无符号8位/像素-即一个像素可以有0-255的值，这是大多数图像和视频格式的正常范围
         assert ( input.depth() == CV_8U );
         //assert ( input.channels() == 3 );
+        std::vector<Mat> res;
 
         std::cout << "Running textDetection with dark_on_light " << dark_on_light << std::endl;
 
@@ -462,13 +475,13 @@ namespace DetectText {
         Mat output5( input.size(), CV_8UC3 );
         cvtColor (output4, output5, CV_GRAY2RGB);
 
+        res.push_back(grayImage);
+        res.push_back(edgeImage);
+        res.push_back(saveSWT);
+        res.push_back(output3);
+        res.push_back(output5);
 
-        /*IplImage * output =
-                cvCreateImage ( input.size(), CV_8UC3 );
-        renderChainsWithBoxes ( SWTImage, validComponents, chains, compBB, output); */
-
-        //imwrite("res.png", output5);
-        return output5;
+        return res;
     }
 
     void strokeWidthTransform (const Mat& edgeImage,

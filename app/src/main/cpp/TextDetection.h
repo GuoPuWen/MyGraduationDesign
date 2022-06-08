@@ -48,7 +48,8 @@ namespace DetectText {
     bool Point2dSort (SWTPoint2d const & lhs,
                       SWTPoint2d const & rhs);
 
-    cv::Mat textDetection (const cv::Mat& input, bool dark_on_light);
+//    cv::Mat textDetection (const cv::Mat& input, bool dark_on_light);
+    std::vector<cv::Mat> textDetection (const cv::Mat& input, bool dark_on_light);
 
     void strokeWidthTransform (const cv::Mat& edgeImage,
                                cv::Mat& gradientX,

@@ -25,6 +25,7 @@
             android:id="@+id/selelct_photo_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="选择照片" />
     </RadioGroup>
 
@@ -47,6 +48,7 @@
             android:id="@+id/system_crop_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="系统裁剪" />
 
         <RadioButton
@@ -81,6 +83,7 @@
             android:id="@+id/aspectBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="宽/高" />
 
         <EditText
@@ -134,6 +137,7 @@
             android:id="@+id/noCompress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="否" />
     </RadioGroup>
 
@@ -161,6 +165,7 @@
             android:id="@+id/noRotateProcessing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="否" />
     </RadioGroup>
 
@@ -188,6 +193,7 @@
             android:id="@+id/noUseSwt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="否" />
     </RadioGroup>
 

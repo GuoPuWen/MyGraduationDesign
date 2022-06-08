@@ -17,6 +17,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,9 +31,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.databaseHelper.Database;
+import com.example.databaseHelper.History;
 import com.example.databaseHelper.MyHelper;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -40,27 +48,36 @@ import java.util.concurrent.FutureTask;
 
 public class ResActivity  extends AppCompatActivity {
 
-    private ImageView ori_pic;
-    private ImageView pre_pic;
-    private EditText res;
+    private ImageView oriPicImageView;
+    private ImageView grayImageView;
+    private ImageView cannyImageView;
+    private ImageView swtImageView;
+    private ImageView componentImageView;
+    private ImageView resultImageView;
+    
 
     private Bitmap source;
+    private Bitmap grayImage;
+    private Bitmap cannyImage;
+    private Bitmap swtImage;
+    private Bitmap componentImage;
+    private Bitmap resultImage;
+
+    private EditText res;
 
     private NaturalSceneOCR ocr ;
-
-
 
     private String path = "";
 
     private String text = "";   //最终结果
 
-    private Bitmap swtImage ;
+
 
     private Button copy;
     private static final String TAG = "ResActivity";
 
     Handler handler;        // Handler 消息处理
-
+    String prtPath = null;
     private Dialog progressDialog;  //进度条
     private SQLiteDatabase database = null;     //数据库对象
 
@@ -68,17 +85,22 @@ public class ResActivity  extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-
+        getSupportActionBar().setTitle("文字识别系统-测试版本");
         initDialog();
+         oriPicImageView = findViewById(R.id.ori_pic);
+         grayImageView = findViewById(R.id.gray);
+         cannyImageView = findViewById(R.id.canny);
+         swtImageView = findViewById(R.id.swt);
+         componentImageView = findViewById(R.id.component);
+         resultImageView = findViewById(R.id.result);
 
-        ori_pic = findViewById(R.id.ori_pic);
-        pre_pic = findViewById(R.id.pre_pic);
         res = findViewById(R.id.res);
         copy = findViewById(R.id.copy);
 
 
         Intent intent = getIntent();
         Uri uri = (Uri)intent.getParcelableExtra("uri");
+
         String language = (String)intent.getStringExtra("language");
         int useSwt = (int) intent.getIntExtra("useSwt", 1); //默认使用
         Log.i("useSwt", String.valueOf(useSwt));
@@ -89,8 +111,17 @@ public class ResActivity  extends AppCompatActivity {
         }
         path = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getPath();
         ocr = new NaturalSceneOCR(source, path,language,useSwt);
+
+        if(useSwt == 0) {
+            grayImageView.setVisibility(View.GONE);
+            cannyImageView.setVisibility(View.GONE);
+            swtImageView.setVisibility(View.GONE);
+            componentImageView.setVisibility(View.GONE);
+
+        }
+
         Log.i("dataPath", path);
-        ori_pic.setImageBitmap(source);
+        oriPicImageView.setImageBitmap(source);
 
         //ProgressDialog pd = ProgressDialog.show(this, "提示", "正在识别中", false, true);
 
@@ -99,13 +130,21 @@ public class ResActivity  extends AppCompatActivity {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
-                pre_pic.setImageBitmap(swtImage);
+                grayImageView.setImageBitmap(grayImage);
+                cannyImageView.setImageBitmap(cannyImage);
+                swtImageView.setImageBitmap(swtImage);
+                componentImageView.setImageBitmap(componentImage);
+                resultImageView.setImageBitmap(resultImage);
                 res.setText(text);
                 //pd.cancel();
                 progressDialog.dismiss();
-                Database data = new Database();
-                data.setText(text);
-                data.setUri(uri.toString());
+                History history = new History();
+                history.setsUri(BitmapUtils.saveBitmap(source, ResActivity.this));
+                history.setpUri(prtPath);
+                history.setTime(new Date().getTime());
+                history.setText(text);
+                Log.i(TAG, history.toString());
+                insertDatabase(history);
             }
         };
         MyOcr myOcr = new MyOcr();
@@ -139,13 +178,17 @@ public class ResActivity  extends AppCompatActivity {
 
     }
 
-
     class MyOcr extends Thread {
         @Override
         public void run() {
-
             text =  ocr.TesseractOCR();
+            grayImage = ocr.getGrayImage();
+            cannyImage = ocr.getEdgeImage();
             swtImage = ocr.getSwtImage();
+            componentImage = ocr.getComponents();
+            resultImage = ocr.getResult();  .
+
+            prtPath = BitmapUtils.saveBitmap(resultImage, ResActivity.this);
             Log.i(TAG, "识别完成");
             handler.sendEmptyMessage(0);
         }
@@ -162,15 +205,22 @@ public class ResActivity  extends AppCompatActivity {
         progressDialog.show();
     }
 
-    public void insertDatabase(Database data) {
+    public void insertDatabase(History data) {
         MyHelper myHelper = new MyHelper(this);
         database = myHelper.getWritableDatabase();
         ContentValues cV = new ContentValues();
-        cV.put(Database.URI, data.getUri());
+        cV.put(Database.SURI, data.getsUri());
+        cV.put(Database.PURI, data.getpUri());
         cV.put(Database.TEXT, data.getText());
+        cV.put(Database.TIME, data.getTime().toString());
         database.insert(Database.TABLE_NAME, null, cV);
-
     }
+
+
+
+
+
+
 }
 
 

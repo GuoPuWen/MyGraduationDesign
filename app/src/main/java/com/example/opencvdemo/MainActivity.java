@@ -1,6 +1,8 @@
 package com.example.opencvdemo;
 
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 
 import android.app.Activity;
@@ -13,6 +15,10 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -27,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.databaseHelper.History;
 import com.example.databaseHelper.MyHelper;
 import com.sl.utakephoto.compress.CompressConfig;
 import com.sl.utakephoto.crop.CropOptions;
@@ -38,7 +45,13 @@ import com.sl.utakephoto.manager.UTakePhoto;
 
 import android.view.View;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.Date;
 import java.util.List;
+
+import static com.example.opencvdemo.SDUtils.assets2SD;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,8 +82,26 @@ public class MainActivity extends AppCompatActivity {
 
     CropOptions.Builder cropBuilder;             //裁剪内部类
     TakePhotoManager photoManager;           //管理类
+    private Dialog progressDialog;  //进度条
+    Handler handler;        // Handler 消息处理
 
-    public  void init() {
+
+
+    /**
+     * TessBaseAPI初始化测第二个参数，就是识别库的名字不要后缀名。
+     */
+    private static String DEFAULT_LANGUAGE = "chi_sim";
+    private static String ENGLISH_LANGUAGE = "eng";
+    /**
+     * assets中的文件名
+     */
+    private static  String DEFAULT_LANGUAGE_NAME = DEFAULT_LANGUAGE + ".traineddata";
+    private static  String ENGLISH_LANGUAGE_NAME = ENGLISH_LANGUAGE + ".traineddata";
+
+    private static String tessdata = "";
+
+
+    public void init() {
         type_group = findViewById(R.id.type_group);
         cropText = findViewById(R.id.cropText);
         crop = findViewById(R.id.crop);
@@ -91,14 +122,77 @@ public class MainActivity extends AppCompatActivity {
         cropBuilder = new CropOptions.Builder();    //裁剪选项
 
         ocr = findViewById(R.id.ocr);
+        initData();  //初始化数据
     }
 
+    public void initData() {
+
+        tessdata = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getPath() + File.separator + "tessdata";
+
+//        String path  = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getPath() + "/tessdata";
+        Log.i(TAG, tessdata);
+        File file = new File(tessdata);
+        if(file.exists()) {
+            Toast.makeText(this,"已经初始化完成",Toast.LENGTH_SHORT).show();
+        } else {
+            initDialog();
+            new InitDataHandler().start();
+            handler = new Handler(){
+                @SuppressLint("HandlerLeak")
+                @Override
+                public void handleMessage(@NonNull Message msg) {
+                    super.handleMessage(msg);
+
+                    //pd.cancel();
+                    progressDialog.dismiss();
+//                    Toast.makeText(this,"成功加载语言包",Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "初始化完成");
+                }
+            };
+
+            Toast.makeText(this,"成功加载语言包",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+//    String tessdata = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getPath() + File.separator + "tessdata";
+
+    class InitDataHandler extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            String LANGUAGE_PATH1 = tessdata + File.separator + DEFAULT_LANGUAGE_NAME;
+            String LANGUAGE_PATH2 = tessdata + File.separator + ENGLISH_LANGUAGE_NAME;
+            assets2SD(getApplicationContext(), LANGUAGE_PATH1, DEFAULT_LANGUAGE_NAME);
+            assets2SD(getApplicationContext(), LANGUAGE_PATH2, ENGLISH_LANGUAGE_NAME);
+            handler.sendEmptyMessage(0);
+        }
+    }
+
+
+
+    public void initDialog(){
+        Log.i(TAG, "initDialog");
+        progressDialog = new Dialog(MainActivity.this,R.style.progress_dialog);
+        progressDialog.setContentView(R.layout.dialog);
+        progressDialog.setCancelable(true);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText("正在加载语言包");
+        progressDialog.show();
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==100 && resultCode == Activity.RESULT_OK){
             Toast.makeText(this,"授权成功",Toast.LENGTH_SHORT).show();
+        } else {
+
         }
     }
 
@@ -115,7 +209,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu1:
                 Toast.makeText(this, "点击了第" + 1 + "个", Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(intent);
                 break;
             case R.id.menu2:
                 Toast.makeText(this, "点击了第" + 2 + "个", Toast.LENGTH_SHORT).show();
@@ -131,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("文字识别系统-测试版本");
         init();
         createDatabase();           //初始化数据库adb
 
@@ -307,6 +403,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createDatabase() {
         MyHelper myHelper = new MyHelper(this);
+        Log.i(TAG , "创建数据库");
         myHelper.getWritableDatabase();
     }
 }

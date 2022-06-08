@@ -13,8 +13,9 @@ public class MyHelper extends SQLiteOpenHelper {
 
     public static String CREATE_TABLE = "create table "+ Database.TABLE_NAME +"(" +
             Database.ID + " Integer primary key autoincrement, " +
-            Database.URI + " varchar(30), " +
-            Database.DATA + " timestamp not null default (datetime('now','localtime')), " +
+            Database.SURI + " varchar(30), " +
+            Database.PURI + " varchar(30), " +
+            Database.TIME + " timestamp not null default (datetime('now','localtime')), " +
             Database.TEXT + " varchar(256))";    // 用于创建表的SQL语句
 
     private static final String TAG = "UseDatabase";
@@ -42,6 +43,10 @@ public class MyHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("drop table if exists " + Database.TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
+
+
+
 }
