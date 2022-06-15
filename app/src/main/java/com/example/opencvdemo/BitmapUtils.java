@@ -3,12 +3,14 @@ package com.example.opencvdemo;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -56,23 +58,14 @@ public class BitmapUtils {
     }
 
     public static Bitmap getBitmapFromPath(String path) {
-
         if (!new File(path).exists()) {
             Log.i(TAG, "文件不存在");
             return null;
         }
-        // Bitmap bitmap = Bitmap.createBitmap(1366, 768, Config.ARGB_8888);
-        // Canvas canvas = new Canvas(bitmap);
-        // Movie movie = Movie.decodeFile(path);
-        // movie.draw(canvas, 0, 0);
-        //
-        // return bitmap;
-
         byte[] buf = new byte[1024 * 1024];// 1M
         Bitmap bitmap = null;
 
         try {
-
             FileInputStream fis = new FileInputStream(path);
             int len = fis.read(buf, 0, buf.length);
             bitmap = BitmapFactory.decodeByteArray(buf, 0, len);
@@ -85,9 +78,16 @@ public class BitmapUtils {
             e.printStackTrace();
 
         }
-
         return bitmap;
     }
 
+    public static Bitmap getBitmapFromUri(Uri uri, Context mContext) {
+        try {
+            return  BitmapFactory.decodeStream(mContext.getContentResolver().openInputStream(uri));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

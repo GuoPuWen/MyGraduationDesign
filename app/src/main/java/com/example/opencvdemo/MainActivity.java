@@ -73,9 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView photoIv;          //最后显示图片
 
     private Button ocr;
-
     private Uri uri = null;
-
 
 
     private RadioButton take_photo_btn;     // 拍照
@@ -149,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "初始化完成");
                 }
             };
-
             Toast.makeText(this,"成功加载语言包",Toast.LENGTH_SHORT).show();
         }
     }
@@ -208,12 +205,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu1:
-                Toast.makeText(this, "点击了第" + 1 + "个", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "点击了第" + 1 + "个", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
                 startActivity(intent);
                 break;
             case R.id.menu2:
-                Toast.makeText(this, "点击了第" + 2 + "个", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "点击了第" + 2 + "个", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(MainActivity.this, AbortActivity.class);
+                startActivity(intent2);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -226,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setTitle("文字识别系统-测试版本");
+        getSupportActionBar().setTitle("基于Android的文字识别系统");
         init();
         createDatabase();           //初始化数据库adb
 
@@ -259,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
                     cropBuilder.setWithOwnCrop(true);
                     break;
                 default:
+
                     Log.e(TAG, "cropBuilder is error");
                     break;
             }
@@ -369,6 +369,8 @@ public class MainActivity extends AppCompatActivity {
                 public void takeSuccess(List<Uri> uriList) {
                     if (uriList != null) {
                         uri = uriList.get(0);
+                        Log.i(TAG, uri.toString());
+
                         photoIv.setImageURI(uri);
                     }
                 }

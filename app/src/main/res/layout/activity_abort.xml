@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="软件介绍：" />
+        <TextView
+            android:layout_marginTop="30px"
+            android:layout_marginLeft="30px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="本软件是一款离线的OCR文字识别软件，支持用户使用相机、相册导入图片进行识别，使用Android原生开发本软件。本软件的关键特点在于使用SWT算法进行图像的预处理，使用OpenCV2.4、Boost1.7开发底层的图像预处理算法。对于经过SWT算法预处理之后的图片，自然场景下的文字识别率大幅提高。"/>
+
+        <TextView
+            android:layout_marginTop="30px"
+            android:textSize="22sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="本软件的特性如下：" />
+
+        <TextView
+            android:layout_marginTop="10px"
+            android:layout_marginLeft="30px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1.使用相机、相册导入图片" />
+        <TextView
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="10px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2.图片裁剪、图片压缩" />
+        <TextView
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="10px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3.使用SWT算法预处理" />
+        <TextView
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="10px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4.中英文识别，Tesseract识别引擎" />
+        <TextView
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="10px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5.多线程识别，加快识别速度" />
+        <TextView
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="10px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6.识别记录保存、删除" />
+        <TextView
+            android:layout_marginTop="30px"
+            android:textSize="22sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="使用方法：" />
+        <TextView
+            android:layout_marginTop="10px"
+            android:layout_marginLeft="30px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1.点击选择照片后，点击开始识别" />
+        <TextView
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="10px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2.对于自然场景图像建议选择进行SWT预处理" />
+        <TextView
+            android:layout_marginTop="30px"
+            android:textSize="22sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="开源地址：" />
+        <TextView
+            android:layout_marginTop="20px"
+            android:layout_marginLeft="30px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="本软件目前已开源，地址为：https://github.com/GuoPuWen/MyGraduationDesign" />
+
+        <TextView
+            android:layout_marginTop="30px"
+            android:textSize="22sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="联系：" />
+        <TextView
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="20px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="邮箱：gopuwe@163.com" />
+
+    </LinearLayout>
+
+</ScrollView>

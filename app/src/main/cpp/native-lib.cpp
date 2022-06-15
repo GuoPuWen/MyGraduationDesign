@@ -137,12 +137,7 @@ Java_com_example_opencvdemo_NaturalSceneOCR_JniBitmapUseSWT(
     MatrixToBitmap(env, res[2], saveSWT);
     MatrixToBitmap(env, res[3], components);
     MatrixToBitmap(env, res[4], result);
-    //cvtColor(matBitmap, grayMat, CV_BGRA2GRAY);
 
-//    ret = MatrixToBitmap(env, res, obj_bitmapOut);       // Bitmap to cv::Mat
-//    if (ret == false) {
-//        return;
-//    }
 }
 
 namespace DetectText {

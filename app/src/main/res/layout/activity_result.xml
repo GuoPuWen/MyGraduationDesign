@@ -24,6 +24,7 @@
             android:layout_height="200dp"/>
 
         <TextView
+            android:id="@+id/grayEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="灰度图像：" />
@@ -33,6 +34,7 @@
             android:layout_height="200dp"/>
 
         <TextView
+            android:id="@+id/cannyEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="边缘检测：" />
@@ -43,6 +45,7 @@
             android:layout_height="200dp" />
 
         <TextView
+            android:id="@+id/swtEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="SWT操作：" />
@@ -52,6 +55,7 @@
             android:layout_height="200dp"/>
 
         <TextView
+            android:id="@+id/componentEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="寻找字母候选者：" />
@@ -62,9 +66,10 @@
 
 
         <TextView
+            android:id="@+id/resultEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="处理后：" />
+            android:text="合并文本行：" />
 
         <ImageView
             android:id="@+id/result"

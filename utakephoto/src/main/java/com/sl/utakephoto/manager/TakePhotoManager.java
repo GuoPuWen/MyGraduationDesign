@@ -50,11 +50,7 @@ import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * author : Sl
- * createDate   : 2019-10-1516:48
- * desc   :
- */
+
 public class TakePhotoManager implements LifecycleListener {
     /**
      * 拍照ResultCode

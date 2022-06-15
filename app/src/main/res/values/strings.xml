@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OpenCVDemo</string>
+    <string name="app_name">文字识别系统</string>
     <string name="title_activity_history">HistoryActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

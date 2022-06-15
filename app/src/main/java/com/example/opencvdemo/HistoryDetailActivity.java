@@ -35,7 +35,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_detail);
-        getSupportActionBar().setTitle("文字识别系统-测试版本");
+        getSupportActionBar().setTitle("基于Android的文字识别系统");
 
         ori_pic = findViewById(R.id.ori_pic);
         pre_pic = findViewById(R.id.pre_pic);

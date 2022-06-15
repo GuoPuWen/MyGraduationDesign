@@ -12,14 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpenCVDemo">
+        <activity android:name=".AbortActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".HistoryActivity"
             android:exported="false"
-            android:label="@string/title_activity_history"
-             />
+            android:label="@string/title_activity_history" />
         <activity android:name=".ResActivity" />
-        <activity android:name=".HistoryDetailActivity"/>
-        <activity android:name=".MainActivity" >
+        <activity android:name=".HistoryDetailActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

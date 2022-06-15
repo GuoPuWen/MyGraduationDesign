@@ -31,6 +31,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -52,7 +55,7 @@ public class HistoryActivity extends AppCompatActivity {
     public void init() {
         MyHelper myHelper = new MyHelper(this);
         database = myHelper.getWritableDatabase();
-        Cursor rawQuery = database.rawQuery("select * from " + Database.TABLE_NAME, null);
+        Cursor rawQuery = database.rawQuery("select * from " + Database.TABLE_NAME + " ORDER BY TIME DESC", null);
         if(rawQuery != null) {
             while(rawQuery.moveToNext()) {
                 String pUri = rawQuery.getString(rawQuery.getColumnIndex(Database.PURI));
@@ -66,6 +69,8 @@ public class HistoryActivity extends AppCompatActivity {
                 historys.add(history);
             }
         }
+
+        Log.i(TAG, historys.toString());
     }
 
 
@@ -74,7 +79,7 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         init();
-        getSupportActionBar().setTitle("文字识别系统-测试版本");
+        getSupportActionBar().setTitle("基于Android的文字识别系统");
         lv1 = (ListView) findViewById(R.id.listView);
 
         this.registerForContextMenu(lv1);
@@ -158,8 +163,10 @@ public class HistoryActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         MyHelper myHelper = new MyHelper(HistoryActivity.this);
                         database = myHelper.getWritableDatabase();
-                           database.execSQL("delete from " + Database.TABLE_NAME+ " where   " + Database.ID + " = " + historys.get(position).getId());
-                        historys.remove(position);
+                        String sql = "delete from " + Database.TABLE_NAME+ " where  " + Database.ID + " = " + historys.get(pos).getId();
+                        System.out.println(sql);
+                        database.execSQL(sql);
+                        historys.remove(pos);
                         adapter.notifyDataSetChanged();
                     }
 
